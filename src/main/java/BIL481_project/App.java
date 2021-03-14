@@ -79,7 +79,7 @@ public class App {
           String input2 = req.queryParams("input2").replaceAll("\\s","");
           Integer input2AsInt = Integer.parseInt(input2);
 
-          Integer result = App.recursiveBinarySearch(inputList, 0, 10000,input2AsInt);
+          Integer result = App.recursiveBinarySearch(inputList, Integer.MIN_VALUE, Integer.MAX_VALUE,input2AsInt);
 
           Map<String, Integer> map = new HashMap<String, Integer>();
           map.put("result", result);
@@ -108,9 +108,19 @@ public class App {
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
     
-    public static Integer recursiveBinarySearch(ArrayList<Integer> arr, int firstElement, int lastElement, Integer elementToSearch) {
+    public static Integer recursiveBinarySearch(ArrayList<Integer> arr, int firstElement, int lastElement, Integer elementToSearch) throws Exception {
 
+        if (arr==null)
+            throw new NullPointerException();
+
+        if (arr.size()==0)
+            throw new IllegalArgumentException();
+
+        if (lastElement<firstElement)
+            throw new IllegalArgumentException();
+            
         // termination condition
+
         if (lastElement >= firstElement) {
             Integer mid = firstElement + (lastElement - firstElement) / 2;
     

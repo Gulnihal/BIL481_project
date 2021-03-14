@@ -20,25 +20,31 @@ class AppTest {
      
     }
     @Test
-        public void testFound() {
+        public void testFound() throws Exception {
            ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-           assertTrue(App.search(array, 4));
+           assertEquals(2, App.recursiveBinarySearch(array, 1, 4, 3));
          }
      
          @Test
-         public void testNotFound() {
+         public void testNotFound() throws Exception {
            ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-           assertFalse(App.search(array, 5));
+           assertNotEquals(3, App.recursiveBinarySearch(array, 1, 4, 3));
          }
      
          @Test
-         public void testEmptyArray() {
+         public void testEmptyArray() throws Exception {
            ArrayList<Integer> array = new ArrayList<>();
-           assertFalse(App.search(array, 1));
+           assertThrows(IllegalArgumentException.class, () -> { App.recursiveBinarySearch(array, 1, 4, 3);});
+
          }
      
          @Test
-         public void testNull() {
-           assertFalse(App.search(null, 1));
+         public void testNull() throws Exception {
+          assertThrows(NullPointerException.class, () -> { App.recursiveBinarySearch(null, 1, 4, 3);});
+         }
+         @Test
+         public void testCompareBoundries() throws Exception {
+          ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+          assertThrows(IllegalArgumentException.class, () -> { App.recursiveBinarySearch(array, 4, 1, 3);});
          }
 }
