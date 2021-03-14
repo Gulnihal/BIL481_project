@@ -27,19 +27,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App {
     public String getGreeting() {
-        return "Hello world. deneme";
+        return "This app finds the element in an arraylist with binary search.";
     }
-
-    public static boolean search(ArrayList<Integer> array, int e) {
-        System.out.println("inside search");
-        if (array == null) return false;
-  
-        for (int elt : array) {
-          if (elt == e) return true;
-        }
-        return false;
-      }
-
 
     public static void main(String[] args) {
 
@@ -57,7 +46,7 @@ public class App {
         logger.error("Current port number:" + port);
 
 
-        get("/", (req, res) -> "Hello, World");
+        get("/", (req, res) -> "These arguments are an arraylist, first item, last item and the element to search. \nAll arguments must be integer.");
 
         post("/compute", (req, res) -> {
           //System.out.println(req.queryParams("input1"));
@@ -94,10 +83,6 @@ public class App {
         },
         new MustacheTemplateEngine());
 
-
-
-
-
     }
 
     static int getHerokuAssignedPort() {
@@ -118,7 +103,7 @@ public class App {
 
         if (lastElement<firstElement)
             throw new IllegalArgumentException();
-            
+
         // termination condition
 
         if (lastElement >= firstElement) {
