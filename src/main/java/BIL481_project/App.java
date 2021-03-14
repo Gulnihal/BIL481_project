@@ -5,7 +5,13 @@
 
 package BIL481_project;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+//import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.*;
+
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
@@ -15,6 +21,8 @@ import static spark.Spark.post;
 
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
+
+
 
 
 public class App {
@@ -34,7 +42,7 @@ public class App {
 
 
     public static void main(String[] args) {
-      
+
         Logger logger = LogManager.getLogger(App.class);
 
         System.out.println(new App().getGreeting());
@@ -69,11 +77,11 @@ public class App {
 
 
           String input2 = req.queryParams("input2").replaceAll("\\s","");
-          int input2AsInt = Integer.parseInt(input2);
+          Integer input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
+          Integer result = App.recursiveBinarySearch(inputList, 0, 10000,input2AsInt);
 
-          Map<String, Boolean> map = new HashMap<String, Boolean>();
+          Map<String, Integer> map = new HashMap<String, Integer>();
           map.put("result", result);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
@@ -98,6 +106,28 @@ public class App {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
+    
+    public static Integer recursiveBinarySearch(ArrayList<Integer> arr, int firstElement, int lastElement, Integer elementToSearch) {
+
+        // termination condition
+        if (lastElement >= firstElement) {
+            Integer mid = firstElement + (lastElement - firstElement) / 2;
+    
+            // if the middle element is our goal element, return its index
+            if (arr.get(mid) == elementToSearch)
+                return mid;
+    
+            // if the middle element is bigger than the goal element
+            // recursively call the method with narrowed data
+            if (arr.get(mid)> elementToSearch)
+                return recursiveBinarySearch(arr, firstElement, mid - 1, elementToSearch);
+    
+            // else, recursively call the method with narrowed data
+            return recursiveBinarySearch(arr, mid + 1, lastElement, elementToSearch);
+        }
+    
+        return -1;
     }
 
 }
