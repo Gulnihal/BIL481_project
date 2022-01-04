@@ -1,3 +1,4 @@
+Written by Gulnihal Gezmen for Software Engineering Principles class.
 This app finds the element in an arraylist with binary search.  
 These arguments are an arraylist, first item, last item and the element to search.  
 All arguments must be integer.  
